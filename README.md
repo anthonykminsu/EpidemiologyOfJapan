@@ -11,7 +11,7 @@ The main functionality of this application includes:
 - Proportional symbol mapping (in `map2.html`), where circle sizes represent case counts.
 - Choropleth mapping (in `map1.html`), displaying data density through color gradients.
 - Custom legend creation, dynamically scaled to data ranges.
-- Hover over each map to get matched statistics of the given county.
+- Hover over the map to get matched statistics of the given county.
 
 ## Project Maps
 
