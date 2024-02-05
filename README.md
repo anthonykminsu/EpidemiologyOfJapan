@@ -30,12 +30,7 @@ The main functionality of this project includes:
 
 ## Libraries in Use
 - **Mapbox GL JS**: For interactive mapping functionalities.
-- **HTML/CSS**: For structuring and styling the web interface.
-
-## Data Sources
-Data for this project was sourced from:
-- The New York Times
-- The U.S. Census Bureau
+- **HTML, CSS, & Javascript**: For structuring and styling the web interface.
 
 These sources provided comprehensive data on COVID-19 cases at the county level across the United States.
 
@@ -75,6 +70,11 @@ This project was developed by Anthony Kim. Special thanks to TA Liz Peng and:
 - `.catch()`: This Promise method is used to catch and log any errors that occur during the data fetching process, ensuring that any issues are appropriately handled and logged.
 
 Each of these functions played a vital role in creating interactive and data-driven maps for visualizing COVID-19 case rates and counts. They collectively contribute to the project’s functionality of fetching, processing, and visually representing complex geographic and statistical data.
+
+## Data Sources
+Data for this project was sourced from:
+- [The New York Times](https://github.com/nytimes/covid-19-data/blob/43d32dde2f87bd4dafbb7d23f5d9e878124018b8/live/us-counties.csv)
+- [The U.S. Census Bureau](https://data.census.gov/table/ACSDP5Y2018.DP05?g=0100000US$050000&d=ACS%205-Year%20Estimates%20Data%20Profiles&hidePreview=true)
 
 ## Future Enhancements
 Future updates may include:
