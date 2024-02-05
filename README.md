@@ -1,7 +1,7 @@
 # Lab 04: COVID-19 Case Rates Visualization Application
 
 ## Introduction
-The COVID-19 Case Rates Visualization is an interactive web-based platform designed to display the spread and intensity of the COVID-19 pandemic across the United States during 2020. The project provides two main interactive maps (`map1.html` and `map2.html`), each offering a unique perspective on the data. The first map attempts to collectively represent the case rate for each county, where the differences in color of each county indicate the percentage for that specific county. The seconf map on the otherhand attempts to visualize the total cases in each county through a series of elipses that are configured to the count of cases. Each map acquires a feature where you can hover over each county to see the actual count, this includes case rate and total number of cases.
+The COVID-19 Case Rates Visualization is an interactive web-based platform designed to display the spread and intensity of the COVID-19 pandemic across the United States during 2020. The project provides two main interactive maps (`map1.html` and `map2.html`), each offering a unique perspective on the data. The first map attempts to collectively represent the case rate for each county, where the differences in color of each county indicate the percentage for that specific county. The seconf map on the other hand attempts to visualize the total cases in each county through a series of ellipses that are configured to the count of cases. Each map acquires a feature where you can hover over each county to see the actual count, this includes case rate and total number of cases.
 
 ## Primary Functions
 The main functionality of this application includes:
@@ -16,7 +16,7 @@ The main functionality of this application includes:
 ## Project Maps
 
 ### Map 1: COVID-19 Case Rates in the United States
-This map (`map1.html`) visualizes the COVID-19 case rate per 1000 individuals among those aged 18 and older within U.S. counties. The map uses a choropleth representation to display the different percentages across each county. The color intensity indicates the severity of the outbreak in each county, brighter red indicating a substantial recording of COVID-19 cases.
+This map (`map1.html`) visualizes the COVID-19 case rate per 1000 individuals among those aged 18 and older within U.S. counties. The map uses a choropleth representation to display the different percentages across each county. The color intensity indicates the severity of the outbreak in each county, with brighter red indicating a substantial recording of COVID-19 cases.
 
 <img width="1440" alt="Screen Shot 2024-02-04 at 6 44 51 PM" src="https://github.com/anthonykminsu/EpidemiologyOfJapan/assets/77130958/03875817-01b3-450e-ae6b-1efe22d1c809">
 
