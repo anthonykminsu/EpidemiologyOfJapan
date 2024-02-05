@@ -32,13 +32,6 @@ The main functionality of this project includes:
 - **Mapbox GL JS**: For interactive mapping functionalities.
 - **HTML, CSS, & Javascript**: For structuring and styling the web interface.
 
-These sources provided comprehensive data on COVID-19 cases at the county level across the United States.
-
-## Credits and Acknowledgments
-This project was developed by Anthony Kim. Special thanks to TA Liz Peng and: 
-- Bo Zhao: For the well-curated lab assignment.
-- UW: For providing necessary resources and support.
-
 ## How to Use
 1. Open either of the HTML files in a web browser to view the interactive maps.
 2. Hover over or click on specific map elements for detailed information.
@@ -76,7 +69,14 @@ Data for this project was sourced from:
 - [The New York Times](https://github.com/nytimes/covid-19-data/blob/43d32dde2f87bd4dafbb7d23f5d9e878124018b8/live/us-counties.csv)
 - [The U.S. Census Bureau](https://data.census.gov/table/ACSDP5Y2018.DP05?g=0100000US$050000&d=ACS%205-Year%20Estimates%20Data%20Profiles&hidePreview=true)
 
+These sources provided comprehensive data on COVID-19 cases at the county level across the United States.
+
 ## Future Enhancements
 Future updates may include:
 - Live data integration for real-time tracking.
 - Additional interactivity features like search and filter tools.
+
+## Credits and Acknowledgments
+This project was developed by Anthony Kim. Special thanks to TA Liz Peng and: 
+- Bo Zhao: For the well-curated lab assignment.
+- UW: For providing necessary resources and support.
