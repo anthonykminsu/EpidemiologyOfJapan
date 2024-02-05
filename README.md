@@ -49,12 +49,32 @@ This project was developed by Anthony Kim. Special thanks to TA Liz Peng:
 2. Hover over or click on specific map elements for detailed information.
 3. Use the legend as a guide to understand the data representation.
 
-## Code Highlights
-The project’s codebase is characterized by its use of advanced mapping techniques and data handling. Key highlights include:
+## Detailed Functionality Overview of Code
 
-- Fetching and parsing GeoJSON data.
-- Dynamic styling of map elements based on data attributes.
-- Responsive design for accessibility across various devices.
+### Map Initialization
+- `mapboxgl.Map`: This function allows the initialization of the map, setting its container and styles. This is the foundational step for creating the map and is critical for both `map1.html` and `map2.html`.
+
+### Data Loading and Processing
+- `fetch`: Used to asynchronously retrieve the GeoJSON data from a specified path. This function is essential for loading the COVID-19 case data into the map.
+- `.then()`: A method of Promise, used here to handle the response from the `fetch` function. It ensures that the map is rendered only after the data has been successfully loaded.
+- `JSON.parse`: This function (implicitly used in the `.json()` method) converts the fetched JSON data into JavaScript objects for further processing.
+
+### Map Source and Layer Configuration
+- `map.addSource`: This function adds a data source to the map. In our maps, it is used to define the GeoJSON data source for COVID-19 case rates and counts.
+- `map.addLayer`: This function is used to add a layer to the map using the defined data source. It specifies the type of layer (like 'fill' for choropleth maps or 'circle' for proportional symbols) and styling properties.
+
+### Dynamic Styling
+- `['step']`, `['get']`, `['interpolate']`: These expressions are used within the `map.addLayer` function to dynamically style the map layers based on the data. For instance, they help in setting the radius of circles proportional to case counts or the color intensity for different case rates.
+
+### Interactive Legend Creation
+- `document.getElementById`: This function is used to select the HTML element where the legend will be appended.
+- `document.createElement`: Used to create new HTML elements (like divs for each legend item) dynamically.
+- `appendChild`: This method is used to add newly created elements (legend items) to the legend container.
+
+### Error Handling
+- `.catch()`: This Promise method is used to catch and log any errors that occur during the data fetching process, ensuring that any issues are appropriately handled and logged.
+
+Each of these functions plays a vital role in creating the interactive and data-driven maps for visualizing COVID-19 case rates and counts. They collectively contribute to the project’s functionality of fetching, processing, and visually representing complex geographic and statistical data.
 
 ## Future Enhancements
 Future updates may include:
