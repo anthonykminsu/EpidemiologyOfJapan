@@ -1,7 +1,7 @@
 # Lab 04: COVID-19 Case Rates Visualization Application
 
 ## Introduction
-The COVID-19 Case Rates Visualization is an interactive web-based platform designed to display the spread and intensity of the COVID-19 pandemic across the United States during 2020. The project provides two main interactive maps (`map1.html` and `map2.html`), each offering a unique perspective on the data. The first map attempts to collectively represent the case rate for each county, where the differences in color of each county indicate the percentage for that specific county.
+The COVID-19 Case Rates Visualization is an interactive web-based platform designed to display the spread and intensity of the COVID-19 pandemic across the United States during 2020. The project provides two main interactive maps (`map1.html` and `map2.html`), each offering a unique perspective on the data. The first map attempts to collectively represent the case rate for each county, where the differences in color of each county indicate the percentage for that specific county. The seconf map on the otherhand attempts to visualize the total cases in each county through a series of elipses that are configured to the count of cases. Each map acquires a feature where you can hover over each county to see the actual count, this includes case rate and total number of cases.
 
 ## Project Maps
 
@@ -27,6 +27,7 @@ The main functionality of this project includes:
 - Proportional symbol mapping (in `map2.html`), where circle sizes represent case counts.
 - Choropleth mapping (in `map1.html`), displaying data density through color gradients.
 - Custom legend creation, dynamically scaled to data ranges.
+- Hover over each map to get matched statistics of the given county.
 
 ## Libraries in Use
 - **Mapbox GL JS**: For interactive mapping functionalities.
