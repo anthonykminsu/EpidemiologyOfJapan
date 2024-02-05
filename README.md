@@ -8,10 +8,14 @@ The COVID-19 Case Rates Visualization is an interactive web-based platform desig
 ### Map 1: COVID-19 Case Rates in the United States
 This map (`map1.html`) visualizes the COVID-19 case rate per 1000 individuals among those aged 18 and older within U.S. counties. The map uses a choropleth representation to display the different percentages across each county. The color intensity indicates the severity of the outbreak in each county, brighter red indicating a substantial recording of COVID-19 cases.
 
+<img width="1440" alt="Screen Shot 2024-02-04 at 6 44 51 PM" src="https://github.com/anthonykminsu/EpidemiologyOfJapan/assets/77130958/03875817-01b3-450e-ae6b-1efe22d1c809">
+
 **Link**: [COVID-19 Case Rates Map](https://anthonykminsu.github.io/EpidemiologyOfJapan/map1.html)
 
 ### Map 2: Total COVID-19 Case Counts in U.S. Counties
 The second map (`map2.html`) displays total COVID-19 case counts within U.S. counties, represented by proportional circles that indicate the severity of cases. In terms of size, each circle correlates with the total number of cases, providing a clear visual representation of the pandemic's impact at the county level. When zoomed in, each county is represented by a circle to indicate the total count of cases within that specified county.
+
+<img width="1440" alt="Screen Shot 2024-02-04 at 6 45 00 PM" src="https://github.com/anthonykminsu/EpidemiologyOfJapan/assets/77130958/484931e7-1b4d-462a-a194-82a44353aac7">
 
 **Link**: [Total COVID-19 Case Counts Map](https://anthonykminsu.github.io/EpidemiologyOfJapan/map2.html)
 
