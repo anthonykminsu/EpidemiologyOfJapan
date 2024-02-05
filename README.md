@@ -1,4 +1,4 @@
-# Lab 04: COVID-19 Case Rates Visualization Project
+# Lab 04: COVID-19 Case Rates Visualization Application
 
 ## Introduction
 The COVID-19 Case Rates Visualization is an interactive web-based platform designed to display the spread and intensity of the COVID-19 pandemic across the United States during 2020. The project provides two main interactive maps (`map1.html` and `map2.html`), each offering a unique perspective on the data. The first map attempts to collectively represent the case rate for each county, where the differences in color of each county indicate the percentage for that specific county.
