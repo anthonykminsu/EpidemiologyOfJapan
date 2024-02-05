@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>COVID-19 Case Rates in the United States 2020</title>
+      <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+      <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet">
+      <link rel="stylesheet" href="css/style.css"/>
+      <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
+      <style>
+         body { margin: 0; padding: 0; }
+         #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+         #legend {
+         position: absolute; bottom: 36px; right: 36px; width: 200px; background: rgba(255,255,255,0.8);
+         margin-right: 20px; padding: 10px; border-radius: 8px; box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+         font-family: 'Open Sans', sans-serif; font-weight: 400; font-size: 14px; color: #555;
+         }
+         .legend-title { text-align: left; margin-bottom: 10px; font-weight: 400; }
+         .legend-scale { margin: 20px 0; }
+         .legend-label { display: block; float: left; width: 50%; text-align: center; font-size: 12px; }
+         .legend-key { width: 30px; height: 10px; border-radius: 5px; display: inline-block; margin-right: 5px; }
+         /* Styles for title and subtitle */
+         #title {
+         position: absolute;
+         top: 20px;
+         left: 20px;
+         font-size: 24px;
+         font-weight: 600;
+         color: #333;
+         background-color: rgba(255, 255, 255, 0.8); /* Background color for the box */
+         padding: 10px; /* Padding inside the box */
+         border-radius: 8px; /* Rounded corners for the box */
+         }
+         #subtitle {
+         position: absolute;
+         top: 50px;
+         left: 20px;
+         font-size: 16px;
+         font-weight: 400;
+         color: #555;
+         background-color: rgba(255, 255, 255, 0.8); /* Background color for the box */
+         padding: 10px; /* Padding inside the box */
+         border-radius: 8px; /* Rounded corners for the box */
+         }
+         #map-description {
+         position: absolute;
+         bottom: 20px;
+         left: 20px;
+         width: calc(33.33% - 40px); /* Set the width to one third of the full width minus the left and right padding */
+         background-color: rgba(255, 255, 255, 0.8);
+         padding: 10px;
+         border-radius: 8px;
+         box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+         font-family: 'Open Sans', sans-serif;
+         font-size: 12px;
+         color: #555;
+         z-index: 1; /* Ensures the div stays above the map layers */
+         }
+      </style>
+   </head>
+   <body>
+      <div id="map"></div>
+      <div id="legend">
+         <div class="legend-title">COVID-19 Rate Count (cases)</div>
+         <div id="legend-scale" class="legend-scale">
+            <!-- Legend scale will be populated with JS -->
+         </div>
+         <div class="break"></div>
+      </div>
+      <div id="title">
+         COVID-19 Case Rate in the United States (among 18 and older)
+      </div>
+      <div id="subtitle">
+         January 2024
+      </div>
+      <!-- Map description, users, and data sources formatted at the bottom of the map -->
+      <div id="map-description" style="position: absolute; bottom: 20px; left: 20px; width: calc(33% - 40px); background: rgba(255,255,255,0.8); padding: 10px; border-radius: 8px; box-shadow: 0 1px 5px rgba(0,0,0,0.4); font-family: 'Open Sans', sans-serif; font-weight: 400; font-size: 14px; color: #555;">
+         <strong>Map Information</strong>
+         <p>Description: Recorded in 2020, this map shows the COVID-19 case rate among individuals aged 18 and older within U.S. counties. The rate is calculated by taking the total
+            number of cases within that country, dividing it by the population count, and then finally multiplying the value by 1000 in order to get the displayed 
+            rate. Above we have the spatially displayed rates that are recorded based on the statistics of the given county.
+         </p>
+         <p>Users: UW Geography students, aspiring geographers, and avid map-makers</p>
+         <p>Data Sources: The data was collected from The New York Times and the U.S. Census Bureau</p>
+      </div>
+      <script>
+         mapboxgl.accessToken = 'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw';
+         let map = new mapboxgl.Map({
+           container: 'map',
+           style: 'mapbox://styles/mapbox/light-v10',
+           zoom: 3,
+           center: [-95, 37] // Centers the map on the USA
+           });
+           map.on('load', () => {
+              // Fetch your GeoJSON data from a file
+              fetch('assets/us-covid-2020-rates.json') // Replace with the correct path to your GeoJSON file
+                  .then((response) => response.json())
+                  .then((data) => {
+                      map.addSource('custom-data', {
+                          type: 'geojson',
+                          data: data // Use the fetched data as the source
+                      });
+         
+                      map.addLayer({
+                          'id': 'custom-data-layer',
+                          'type': 'fill',
+                          'source': 'custom-data',
+                          'paint': {
+                              'fill-color': [
+                                  'interpolate',
+                                  ['linear'],
+                                  ['get', 'rates'], // Property name containing COVID-19 rates
+                                  0, 'rgba(0, 0, 0, 0)',
+                                  100, 'rgba(255, 0, 0, 0.7)' // Customize the color for high rates
+                              ],
+                              'fill-outline-color': 'white',
+                              'fill-opacity': 0.7
+                          }
+                      });
+                      // Create legend
+                      const legend = document.getElementById('legend-scale');
+                      const steps = 5; // Adjust the number of steps as needed
+         
+                      for (let i = 0; i < steps; i++) {
+                          const covidRate = (i / (steps - 1)) * 100;
+                          const color = `rgba(255, 0, 0, ${covidRate / 100})`; // Adjust color based on rate
+                          const label = document.createElement('div');
+                          label.className = 'legend-label';
+                          label.innerHTML = `<span class="legend-key" style="background:${color}"></span>${covidRate.toFixed(2)}%`;
+                          legend.appendChild(label);
+                      }
+                  })
+         
+                  .catch((error) => {
+                      console.error('Error fetching GeoJSON data:', error);
+                  });
+           });
+      </script>
+   </body>
+</html>

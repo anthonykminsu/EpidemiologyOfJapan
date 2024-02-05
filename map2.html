@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title> Total COVID-19 Case Rates in the United States 2020 </title>
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+      <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet">
+      <link rel="stylesheet" href="css/style.css"/>
+      <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
+      <style>
+         body { margin: 0; padding: 0; }
+         #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+         #legend {
+         position: absolute; bottom: 36px; right: 36px; width: 200px; background: rgba(255,255,255,0.8);
+         margin-right: 20px; padding: 10px; border-radius: 8px; box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+         font-family: 'Open Sans', sans-serif; font-weight: 400; font-size: 14px; color: #555;
+         }
+         .legend-title { text-align: left; margin-bottom: 10px; font-weight: 400; }
+         .legend-scale { margin: 20px 0; }
+         .legend-label { display: block; float: left; width: 50%; text-align: center; font-size: 12px; }
+         .legend-key { width: 30px; height: 10px; border-radius: 5px; display: inline-block; margin-right: 5px; }
+         /* Styles for title and subtitle */
+         #title {
+         position: absolute;
+         top: 20px;
+         left: 20px;
+         font-size: 24px;
+         font-weight: 600;
+         color: #333;
+         background-color: rgba(255, 255, 255, 0.8); /* Background color for the box */
+         padding: 10px; /* Padding inside the box */
+         border-radius: 8px; /* Rounded corners for the box */
+         }
+         #subtitle {
+         position: absolute;
+         top: 50px;
+         left: 20px;
+         font-size: 16px;
+         font-weight: 400;
+         color: #555;
+         background-color: rgba(255, 255, 255, 0.8); /* Background color for the box */
+         padding: 10px; /* Padding inside the box */
+         border-radius: 8px; /* Rounded corners for the box */
+         }
+         #map-description {
+         position: absolute;
+         bottom: 20px;
+         left: 20px;
+         width: calc(33.33% - 40px); /* Set the width to one third of the full width minus the left and right padding */
+         background-color: rgba(255, 255, 255, 0.8);
+         padding: 10px;
+         border-radius: 8px;
+         box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+         font-family: 'Open Sans', sans-serif;
+         font-size: 12px;
+         color: #555;
+         z-index: 1; /* Ensures the div stays above the map layers */
+         }
+      </style>
+   </head>
+   <body>
+      <div id="map"></div>
+      <div id="legend">
+         <div class="legend-title">COVID-19 Case Count</div>
+         <div id="legend-scale" class="legend-scale">
+            <!-- Legend scale will be populated with JS -->
+         </div>
+         <div class="break"></div>
+      </div>
+      <div id="title">
+         COVID-19 Case Count within U.S. Counties (among 18 and older)
+      </div>
+      <div id="subtitle">
+         January 2024
+      </div>
+      <!-- Map description -->
+      <div id="map-description" style="position: absolute; bottom: 20px; left: 20px; width: calc(33% - 40px); background: rgba(255,255,255,0.8); padding: 10px; border-radius: 8px; box-shadow: 0 1px 5px rgba(0,0,0,0.4); font-family: 'Open Sans', sans-serif; font-weight: 400; font-size: 14px; color: #555;">
+         <strong>Map Information</strong>
+         <p>Description: This map attempts to show the total number of COVID-19 cases among individuals aged 18 and older within U.S. counties. The size of the circles displayed are
+            determined on the total count of cases within each county. Each county is represented by a dot which makes it easier for the user to locate there desired county. The data 
+            was collected in 2020 through the U.S. Census Bureau.
+         </p>
+         <p>Users: Aspiring epidemologist, geography students, data scienctists</p>
+         <p>Data Sources: The data was collected from The U.S. Census Bureau</p>
+      </div>
+      </div>
+      <script>
+         mapboxgl.accessToken = 'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw'; // Replace with your Mapbox access token
+         let map = new mapboxgl.Map({
+             container: 'map',
+             style: 'mapbox://styles/mapbox/light-v10',
+             zoom: 3,
+             center: [-95, 37] // Centers the map on the USA
+         });
+         
+         map.on('load', () => {
+             fetch('assets/us-covid-2020-counts.json') // Load your GeoJSON data
+                 .then(response => response.json())
+                 .then(data => {
+                     map.addSource('covid-cases', {
+                         type: 'geojson',
+                         data: data
+                     });
+         
+                     map.addLayer({
+                         'id': 'covid-cases-layer',
+                         'type': 'circle',
+                         'source': 'covid-cases',
+                         'paint': {
+                             // Use a 'step' expression to scale circle radius by number of cases
+                             'circle-radius': [
+                                 'step',
+                                 ['get', 'cases'],
+                                 5, 1000, // Radius 5 for cases up to 1000
+                                 10, 5000, // Radius 10 for cases up to 5000
+                                 15 // Radius 15 for cases over 5000
+                             ],
+                             'circle-color': 'rgba(255, 0, 0, 0.6)',
+                             'circle-stroke-width': 1,
+                             'circle-stroke-color': '#fff'
+                         }
+                     });
+                     const legend = document.getElementById('legend-scale');
+         const sizes = [5, 10, 15]; // Circle sizes used in the map
+         const caseCounts = [1000, 5000, 10000]; // Representative case counts for each size
+         
+         for (let i = 0; i < sizes.length; i++) {
+             const size = sizes[i];
+             const cases = caseCounts[i];
+             const item = document.createElement('div');
+             item.className = 'legend-item';
+             item.innerHTML = `<span class="legend-key" style="width: ${size}px; height: ${size}px; border-radius: 50%; background: rgba(255, 0, 0, 0.6); display: inline-block;"></span> &nbsp; ${cases} cases`;
+             legend.appendChild(item);
+         }
+         
+                     // Update the legend here to reflect the proportional symbol sizes
+                     // ...
+                 })
+                 .catch(error => {
+                     console.error('Error fetching GeoJSON data:', error);
+                 });
+         });
+      </script>
+   </body>
+</html>
