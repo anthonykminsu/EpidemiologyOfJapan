@@ -3,6 +3,16 @@
 ## Introduction
 The COVID-19 Case Rates Visualization is an interactive web-based platform designed to display the spread and intensity of the COVID-19 pandemic across the United States during 2020. The project provides two main interactive maps (`map1.html` and `map2.html`), each offering a unique perspective on the data. The first map attempts to collectively represent the case rate for each county, where the differences in color of each county indicate the percentage for that specific county. The seconf map on the otherhand attempts to visualize the total cases in each county through a series of elipses that are configured to the count of cases. Each map acquires a feature where you can hover over each county to see the actual count, this includes case rate and total number of cases.
 
+## Primary Functions
+The main functionality of this project includes:
+
+- Interactive mapping using Mapbox GL JS.
+- Data-driven visualizations with dynamic rendering based on GeoJSON inputs.
+- Proportional symbol mapping (in `map2.html`), where circle sizes represent case counts.
+- Choropleth mapping (in `map1.html`), displaying data density through color gradients.
+- Custom legend creation, dynamically scaled to data ranges.
+- Hover over each map to get matched statistics of the given county.
+
 ## Project Maps
 
 ### Map 1: COVID-19 Case Rates in the United States
@@ -18,16 +28,6 @@ The second map (`map2.html`) displays total COVID-19 case counts within U.S. cou
 <img width="1440" alt="Screen Shot 2024-02-04 at 6 45 00 PM" src="https://github.com/anthonykminsu/EpidemiologyOfJapan/assets/77130958/484931e7-1b4d-462a-a194-82a44353aac7">
 
 **Link**: [Total COVID-19 Case Counts Map](https://anthonykminsu.github.io/EpidemiologyOfJapan/map2.html)
-
-## Primary Functions
-The main functionality of this project includes:
-
-- Interactive mapping using Mapbox GL JS.
-- Data-driven visualizations with dynamic rendering based on GeoJSON inputs.
-- Proportional symbol mapping (in `map2.html`), where circle sizes represent case counts.
-- Choropleth mapping (in `map1.html`), displaying data density through color gradients.
-- Custom legend creation, dynamically scaled to data ranges.
-- Hover over each map to get matched statistics of the given county.
 
 ## Libraries in Use
 - **Mapbox GL JS**: For interactive mapping functionalities.
