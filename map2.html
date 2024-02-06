@@ -77,8 +77,8 @@
       <div id="map-description" style="position: absolute; bottom: 20px; left: 20px; width: calc(33% - 40px); background: rgba(255,255,255,0.8); padding: 10px; border-radius: 8px; box-shadow: 0 1px 5px rgba(0,0,0,0.4); font-family: 'Open Sans', sans-serif; font-weight: 400; font-size: 14px; color: #555;">
          <strong>Map Information</strong>
          <p>Description: This map attempts to show the total number of COVID-19 cases among individuals aged 18 and older within U.S. counties. The size of the circles displayed are
-            determined on the total count of cases within each county. Each county is represented by a dot which makes it easier for the user to locate there desired county. The data 
-            was collected in 2020 through the U.S. Census Bureau.
+            determined on the total count of cases within each county. Each county is represented by a dot which makes it easier for the user to locate there desired county.
+            You can also hover over the map to acquire the total count of cases within a specified county. The data was collected in 2020 through the U.S. Census Bureau.
          </p>
          <p>Users: Aspiring epidemologist, geography students, data scienctists</p>
          <p>Data Sources: The data was collected from The U.S. Census Bureau</p>
@@ -89,8 +89,9 @@
          let map = new mapboxgl.Map({
              container: 'map',
              style: 'mapbox://styles/mapbox/light-v10',
-             zoom: 3,
-             center: [-95, 37] // Centers the map on the USA
+             zoom: 3.8,
+             center: [-96, 37.5], // Centers the map on the USA
+             projection: 'albers'
          });
          
          map.on('load', () => {
@@ -120,21 +121,37 @@
                              'circle-stroke-color': '#fff'
                          }
                      });
-                     const legend = document.getElementById('legend-scale');
-         const sizes = [5, 10, 15]; // Circle sizes used in the map
-         const caseCounts = [1000, 5000, 10000]; // Representative case counts for each size
-         
-         for (let i = 0; i < sizes.length; i++) {
-             const size = sizes[i];
-             const cases = caseCounts[i];
-             const item = document.createElement('div');
-             item.className = 'legend-item';
-             item.innerHTML = `<span class="legend-key" style="width: ${size}px; height: ${size}px; border-radius: 50%; background: rgba(255, 0, 0, 0.6); display: inline-block;"></span> &nbsp; ${cases} cases`;
-             legend.appendChild(item);
-         }
-         
-                     // Update the legend here to reflect the proportional symbol sizes
-                     // ...
+                     // Add pop-up on click
+                map.on('click', 'covid-cases-layer', function (e) {
+                    var county = e.features[0].properties.county;
+                    var cases = e.features[0].properties.cases;
+                    new mapboxgl.Popup()
+                        .setLngLat(e.lngLat)
+                        .setHTML(`<h4>${county} County</h4><p>Total Cases: ${cases}</p>`)
+                        .addTo(map);
+                });
+
+                // Change the cursor to a pointer when the mouse is over the covid-cases-layer.
+                map.on('mouseenter', 'covid-cases-layer', function () {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
+
+                // Change it back to a pointer when it leaves.
+                map.on('mouseleave', 'covid-cases-layer', function () {
+                    map.getCanvas().style.cursor = '';
+                });
+                const legend = document.getElementById('legend-scale');
+                const sizes = [5, 10, 15]; // Circle sizes used in the map
+                const caseCounts = [1000, 5000, 10000]; // Representative case counts for each size
+
+                for (let i = 0; i < sizes.length; i++) {
+                    const size = sizes[i];
+                    const cases = caseCounts[i];
+                    const item = document.createElement('div');
+                    item.className = 'legend-item';
+                    item.innerHTML = `<span class="legend-key" style="width: ${size}px; height: ${size}px; border-radius: 50%; background: rgba(255, 0, 0, 0.6); display: inline-block;"></span> &nbsp; ${cases} cases`;
+                    legend.appendChild(item);
+            }
                  })
                  .catch(error => {
                      console.error('Error fetching GeoJSON data:', error);

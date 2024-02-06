@@ -79,7 +79,8 @@
          <strong>Map Information</strong>
          <p>Description: Recorded in 2020, this map shows the COVID-19 case rate among individuals aged 18 and older within U.S. counties. The rate is calculated by taking the total
             number of cases within that country, dividing it by the population count, and then finally multiplying the value by 1000 in order to get the displayed 
-            rate. Above we have the spatially displayed rates that are recorded based on the statistics of the given county.
+            rate. Above we have the spatially displayed rates that are recorded based on the statistics of the given county. Feel free to hover over a desired county
+            to view the actual case rate.
          </p>
          <p>Users: UW Geography students, aspiring geographers, and avid map-makers</p>
          <p>Data Sources: The data was collected from The New York Times and the U.S. Census Bureau</p>
@@ -89,8 +90,9 @@
          let map = new mapboxgl.Map({
            container: 'map',
            style: 'mapbox://styles/mapbox/light-v10',
-           zoom: 3,
-           center: [-95, 37] // Centers the map on the USA
+           zoom: 3.7,
+           center: [-96, 37.5],
+           projection: 'albers'
            });
            map.on('load', () => {
               // Fetch your GeoJSON data from a file
@@ -101,7 +103,6 @@
                           type: 'geojson',
                           data: data // Use the fetched data as the source
                       });
-         
                       map.addLayer({
                           'id': 'custom-data-layer',
                           'type': 'fill',
@@ -118,6 +119,27 @@
                               'fill-opacity': 0.7
                           }
                       });
+         
+                      // Create pop-up on click
+                map.on('click', 'custom-data-layer', function (e) {
+                    var county = e.features[0].properties.county;
+                    var rate = e.features[0].properties.rates;
+                    new mapboxgl.Popup()
+                        .setLngLat(e.lngLat)
+                        .setHTML(`<h4>${county} County</h4><p>COVID-19 Rate: ${rate}</p>`)
+                        .addTo(map);
+                });
+         
+                // Change the cursor to a pointer when the mouse is over the custom-data-layer.
+                map.on('mouseenter', 'custom-data-layer', function () {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
+         
+                // Change it back to a pointer when it leaves.
+                map.on('mouseleave', 'custom-data-layer', function () {
+                    map.getCanvas().style.cursor = '';
+                });
+         
                       // Create legend
                       const legend = document.getElementById('legend-scale');
                       const steps = 5; // Adjust the number of steps as needed
